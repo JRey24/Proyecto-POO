@@ -1,0 +1,21 @@
+print("Bienvenido a ...........")
+print("Inserte el nombre del Conjunto: ", end="")
+Nconjunto = input()
+
+Ntorre = int(input("Ingrese el numero de torres: "))
+
+Npisos = int(input("Ingrese el numero de pisos: "))
+
+Napartamento = int(input("Ingrese el numero de apartamento: "))
+
+print(f"El nombre del conjunto es: {Nconjunto}")
+print(f"El numero de torres es: {Ntorre}")
+print(f"El numero de pisos es: {Npisos}")
+print(f"El numero de apartamentos por piso es: {Napartamento}")
+
+TapartamentosT = Npisos * Napartamento
+print(f"En una torre hay : {TapartamentosT} apartamentos")
+
+TapartamentosC = Ntorre * TapartamentosT
+print(f"En el conjunto hay un total de: {TapartamentosC} apartamentos")
+
