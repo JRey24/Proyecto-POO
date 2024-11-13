@@ -1,0 +1,14 @@
+# Crear una lista vacía
+torre = input()
+numeros = []
+
+# Pedir al usuario que ingrese la cantidad de números que quiere introducir
+n = int(torre)
+
+# Pedir al usuario que ingrese los números
+for i in range(n):
+    num = float(input(f"Ingrese la cantidad de consumo de la torre {i+1}: "))  # Convertimos a float para aceptar decimales
+    numeros.append(num)
+
+# Mostrar la lista
+print("La lista de números es:", numeros)
