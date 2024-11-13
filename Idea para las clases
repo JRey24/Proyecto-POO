@@ -1,0 +1,16 @@
+class Apartamento:
+    def __init__(self, numero, habitantes, medidor):
+        self.numero = numero
+        self.habitantes = habitantes
+        self.medidor = medidor()
+        
+    def registrar_lectura(self, nueva_lectura):
+        self.medidor.registrar_lectura(nueva_lectura)
+
+class Torre:
+    def __init__(self, numero):
+        self.numero = numero
+        self.apartamentos = []
+        
+    def agregar_apartamento(self, apartamento):
+        self.apartamentos.append(apartamento)
