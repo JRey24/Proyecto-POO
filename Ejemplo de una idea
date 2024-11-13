@@ -1,0 +1,39 @@
+print("Bienvenido a ...........")
+
+# Solicitar el nombre del conjunto
+print("Inserte el nombre del Conjunto: ", end="")
+Nconjunto = input()
+
+# Solicitar número de torres, pisos y apartamentos
+Ntorre = int(input("Ingrese el numero de torres: "))
+Npisos = int(input("Ingrese el numero de pisos: "))
+Napartamento = int(input("Ingrese el numero de apartamentos por piso: "))
+
+# Mostrar los datos proporcionados
+print(f"El nombre del conjunto es: {Nconjunto}")
+print(f"El numero de torres es: {Ntorre}")
+print(f"El numero de pisos es: {Npisos}")
+print(f"El numero de apartamentos por piso es: {Napartamento}")
+
+# Crear un array (lista de listas) para almacenar la cantidad de apartamentos por torre y piso
+apartamentos_por_torre = []  # Esta lista contendrá las torres
+
+# Llenamos la lista con la cantidad de apartamentos en cada torre
+for torre in range(Ntorre):
+    torre_data = []  # Lista para cada torre
+    for piso in range(Npisos):
+        torre_data.append(Napartamento)  # Asumimos que el número de apartamentos por piso es constante
+    apartamentos_por_torre.append(torre_data)  # Agregamos la torre al conjunto
+
+# Mostrar la estructura del array
+print("\nDistribución de apartamentos por torre y piso:")
+for i, torre in enumerate(apartamentos_por_torre):
+    print(f"Torre {i + 1}: {torre} apartamentos por piso")
+
+# Calcular el total de apartamentos en una torre
+TapartamentosT = Npisos * Napartamento
+print(f"\nEn una torre hay : {TapartamentosT} apartamentos")
+
+# Calcular el total de apartamentos en el conjunto
+TapartamentosC = Ntorre * TapartamentosT
+print(f"En el conjunto hay un total de: {TapartamentosC} apartamentos")
