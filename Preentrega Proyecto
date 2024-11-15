@@ -1,5 +1,5 @@
 class Apartamento:
-    def _init_(self, numero, habitantes, medidor):
+    def __init__(self, numero, habitantes, medidor):
         self.numero = numero
         self.habitantes = habitantes
         self.medidor = medidor
@@ -10,8 +10,8 @@ class Apartamento:
         print(f"* Consumo del apartamento: {self.medidor}")
 
 class interior(Apartamento):
-    def _init_(self, numero, habitantes, medidor):
-        super()._init_(numero, habitantes, medidor)
+    def __init__(self, numero, habitantes, medidor):
+        super().__init__(numero, habitantes, medidor)
         self.dañosColaterales = None  # Inicializamos a None por defecto
 
     def pregunta_daños(self):
@@ -37,7 +37,7 @@ print("Inserte el nombre del Conjunto: ", end="")
 Nconjunto = input()
 Ntorre = int(input("Ingrese el numero de torres: "))
 Npisos = int(input("Ingrese el numero de pisos: "))
-Napartamento = int(input("Ingrese el numero de apartamento: "))
+Napartamento = int(input("Ingrese el numero de apartamento por piso: "))
 
 print(f"El nombre del conjunto es: {Nconjunto}")
 print(f"El numero de torres es: {Ntorre}")
