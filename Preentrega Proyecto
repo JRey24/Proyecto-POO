@@ -12,7 +12,7 @@ class Apartamento:
 class interior(Apartamento):
     def __init__(self, numero, habitantes, medidor):
         super().__init__(numero, habitantes, medidor)
-        self.dañosColaterales = None  # Inicializamos a None por defecto
+        self.dañosColaterales = None  
 
     def pregunta_daños(self):
         while True:
@@ -30,14 +30,31 @@ class interior(Apartamento):
         super().datos()  
         print(f"* Daños colaterales: {self.dañosColaterales}")
 
+class Evaluador_consumo_Agua:
+    def __init__(self, consumo_total):
+        self.consumo_total = consumo_total
+
+    def evaluar(self):
+        promedio = self.consumo_total / len(numeros)
+
+        if promedio > 150:  
+            return "Rojo: Consumo muy alto"
+        elif promedio > 100:
+            return "Amarillo: Consumo moderado"
+        else:
+            return "Verde: Consumo bajo"
+        
+
 #Interfaz de datos globales
-print("Bienvenido a ...........")
+print(" ")  
+print("Bienvenido a tu Sistema Regulador de Agua")
 print("Inserte el nombre del Conjunto: ", end="")
 
 Nconjunto = input()
 Ntorre = int(input("Ingrese el numero de torres: "))
 Npisos = int(input("Ingrese el numero de pisos: "))
-Napartamento = int(input("Ingrese el numero de apartamento por piso: "))
+Napartamento = int(input("Ingrese el numero de apartamentos por piso: "))
+print(" ")
 
 print(f"El nombre del conjunto es: {Nconjunto}")
 print(f"El numero de torres es: {Ntorre}")
@@ -49,6 +66,7 @@ print(f"En una torre hay : {TapartamentosT} apartamentos")
 
 TapartamentosC = Ntorre * TapartamentosT
 print(f"En el conjunto hay un total de: {TapartamentosC} apartamentos")
+print(" ")
 
 #array para determinar el consumo por torre (con la variable Ntorre)
 numeros = []
@@ -57,18 +75,21 @@ for i in range(n):
     num = float(input(f"Ingrese la cantidad de consumo de la torre {i+1}: "))  
     numeros.append(num)
 print("El consumo por metro cubico (m3) de todas las torres son:", numeros)
+print(" ")  
 
+consumo_total = sum(numeros)
 
+evaluador= Evaluador_consumo_Agua(consumo_total)
+evaluacion = evaluador.evaluar()
 
 # Lista para almacenar los apartamentos de cada torre
 apartamentos_por_torre = []
 for i in range(Ntorre):
     # Calcular el consumo promedio por apartamento en esta torre
     promedio_por_apt = numeros[i] / TapartamentosT
-    # lista para los apartamentos de esta torre
     apartamentos_torre = []
     for j in range(TapartamentosT):
-        numero_apt = j + 1  # Número del apartamento
+        numero_apt = j + 1  
         habitantes = int(input(f"Ingrese el número de habitantes del apartamento {numero_apt} en la torre {i+1}: "))
         apartamento = interior(numero_apt, habitantes, promedio_por_apt)
         apartamento.pregunta_daños()
@@ -81,3 +102,9 @@ for i in range(Ntorre):
     print(f"\nDatos de los apartamentos de la torre {i+1}:")
     for apartamento in apartamentos_por_torre[i]:
         apartamento.datos()
+
+print(" ")        
+print("promedio de consumo total de agua en todo el conjunto : ", sum(numeros)/len(numeros), "m3")    
+print(" ")  
+print(f"Evaluación del consumo: {evaluacion}")
+print(" ")  
