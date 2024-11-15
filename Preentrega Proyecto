@@ -29,6 +29,13 @@ class interior(Apartamento):
     def datos(self):
         super().datos()  
         print(f"* Daños colaterales: {self.dañosColaterales}")
+    
+    def calcular_consumo_ajustado(self):
+        consumo_base = self.medidor
+        if self.dañosColaterales:
+            consumo_base += 30
+        return consumo_base 
+    
 
 class Evaluador_consumo_Agua:
     def __init__(self, consumo_total):
@@ -44,10 +51,23 @@ class Evaluador_consumo_Agua:
         else:
             return "Verde: Consumo bajo"
         
+class EvaluadorConsumo:
+    def __init__(self, apartamentos):
+        self.apartamentos = apartamentos
+        self.consumo_total_ajustado = sum(apartamento.calcular_consumo_ajustado() for apartamento in apartamentos)
+
+    def evaluar(self):
+        promedio = self.consumo_total_ajustado / len(self.apartamentos)
+        if promedio > 150:
+            return "Rojo: Consumo muy alto"
+        elif promedio > 100:
+            return "Amarillo: Consumo moderado"
+        else:
+            return "Verde: Consumo bajo"
 
 #Interfaz de datos globales
-print(" ")  
-print("Bienvenido a tu Sistema Regulador de Agua")
+print(" ")
+print("Bienvenido a tu sistema regulador de agua")
 print("Inserte el nombre del Conjunto: ", end="")
 
 Nconjunto = input()
@@ -75,7 +95,7 @@ for i in range(n):
     num = float(input(f"Ingrese la cantidad de consumo de la torre {i+1}: "))  
     numeros.append(num)
 print("El consumo por metro cubico (m3) de todas las torres son:", numeros)
-print(" ")  
+print(" ")
 
 consumo_total = sum(numeros)
 
@@ -97,14 +117,26 @@ for i in range(Ntorre):
     
     apartamentos_por_torre.append(apartamentos_torre)
 
+todos_los_apartamentos = []
+for torre in apartamentos_por_torre:
+    todos_los_apartamentos.extend(torre)
+evaluador = EvaluadorConsumo(todos_los_apartamentos)
+evaluacion = evaluador.evaluar()
+
 # Mostrar los datos de los apartamentos
 for i in range(Ntorre):
     print(f"\nDatos de los apartamentos de la torre {i+1}:")
     for apartamento in apartamentos_por_torre[i]:
         apartamento.datos()
+        if isinstance(apartamento, interior):
+            consumo_ajustado = apartamento.calcular_consumo_ajustado()
+            print(f"Consumo ajustado (con daños): {consumo_ajustado}")
+            print(" ")  
 
 print(" ")        
-print("promedio de consumo total de agua en todo el conjunto : ", sum(numeros)/len(numeros), "m3")    
-print(" ")  
+print("Promedio de consumo total de agua en todo el conjunto : ", sum(numeros)/len(numeros), "m3")
+print(" ")
+print(f"El consumo total ajustado del conjunto es: {evaluador.consumo_total_ajustado} m3")       
+print(" ")
 print(f"Evaluación del consumo: {evaluacion}")
-print(" ")  
+print(" ")
