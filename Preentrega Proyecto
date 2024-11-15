@@ -1,0 +1,83 @@
+class Apartamento:
+    def _init_(self, numero, habitantes, medidor):
+        self.numero = numero
+        self.habitantes = habitantes
+        self.medidor = medidor
+
+    def datos(self):
+        print(f"* Número de apartamento: {self.numero}")
+        print(f"* Número de habitantes: {self.habitantes}")
+        print(f"* Consumo del apartamento: {self.medidor}")
+
+class interior(Apartamento):
+    def _init_(self, numero, habitantes, medidor):
+        super()._init_(numero, habitantes, medidor)
+        self.dañosColaterales = None  # Inicializamos a None por defecto
+
+    def pregunta_daños(self):
+        while True:
+            opcion = input(f"¿Hubo algún daño en el apartamento {self.numero}? (si/no): ")
+            if opcion.lower() == 'si':
+                self.dañosColaterales = True
+                break
+            elif opcion.lower() == 'no':
+                self.dañosColaterales = False
+                break
+            else:
+                print("Respuesta inválida. Por favor, ingrese 'si' o 'no'.")
+    
+    def datos(self):
+        super().datos()  
+        print(f"* Daños colaterales: {self.dañosColaterales}")
+
+#Interfaz de datos globales
+print("Bienvenido a ...........")
+print("Inserte el nombre del Conjunto: ", end="")
+
+Nconjunto = input()
+Ntorre = int(input("Ingrese el numero de torres: "))
+Npisos = int(input("Ingrese el numero de pisos: "))
+Napartamento = int(input("Ingrese el numero de apartamento: "))
+
+print(f"El nombre del conjunto es: {Nconjunto}")
+print(f"El numero de torres es: {Ntorre}")
+print(f"El numero de pisos es: {Npisos}")
+print(f"El numero de apartamentos por piso es: {Napartamento}")
+
+TapartamentosT = Npisos * Napartamento
+print(f"En una torre hay : {TapartamentosT} apartamentos")
+
+TapartamentosC = Ntorre * TapartamentosT
+print(f"En el conjunto hay un total de: {TapartamentosC} apartamentos")
+
+#array para determinar el consumo por torre (con la variable Ntorre)
+numeros = []
+n = int(Ntorre)
+for i in range(n):
+    num = float(input(f"Ingrese la cantidad de consumo de la torre {i+1}: "))  
+    numeros.append(num)
+print("El consumo por metro cubico (m3) de todas las torres son:", numeros)
+
+
+
+# Lista para almacenar los apartamentos de cada torre
+apartamentos_por_torre = []
+for i in range(Ntorre):
+    # Calcular el consumo promedio por apartamento en esta torre
+    promedio_por_apt = numeros[i] / TapartamentosT
+    # lista para los apartamentos de esta torre
+    apartamentos_torre = []
+    for j in range(TapartamentosT):
+        numero_apt = j + 1  # Número del apartamento
+        habitantes = int(input(f"Ingrese el número de habitantes del apartamento {numero_apt} en la torre {i+1}: "))
+        apartamento = interior(numero_apt, habitantes, promedio_por_apt)
+        apartamento.pregunta_daños()
+        apartamentos_torre.append(apartamento)
+    
+    apartamentos_por_torre.append(apartamentos_torre)
+
+# Mostrar los datos de los apartamentos
+for i in range(Ntorre):
+    print(f"\nDatos de los apartamentos de la torre {i+1}:")
+    for apartamento in apartamentos_por_torre[i]:
+        apartamento.datos()
